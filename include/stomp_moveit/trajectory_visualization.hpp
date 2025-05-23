@@ -17,10 +17,18 @@ namespace visualization
 
 namespace
 {
-const auto GREEN = [](const double& a) {
+const auto YELLOW = [](const double& a) {
   std_msgs::msg::ColorRGBA color;
-  color.r = 0.1;
+  color.r = 0.8;
   color.g = 0.8;
+  color.b = 0.1;
+  color.a = a;
+  return color;
+};
+const auto RED = [](const double& a) {
+  std_msgs::msg::ColorRGBA color;
+  color.r = 0.8;
+  color.g = 0.1;
   color.b = 0.1;
   color.a = a;
   return color;
@@ -28,7 +36,7 @@ const auto GREEN = [](const double& a) {
 visualization_msgs::msg::MarkerArray
 createTrajectoryMarkerArray(const robot_trajectory::RobotTrajectory& robot_trajectory,
                             const moveit::core::LinkModel* ee_parent_link,
-                            const std_msgs::msg::ColorRGBA& color = GREEN(1.0))
+                            const std_msgs::msg::ColorRGBA& color = RED(1.0))
 {
   visualization_msgs::msg::MarkerArray markers_array;
 
@@ -83,7 +91,7 @@ get_iteration_path_publisher(rclcpp::Publisher<visualization_msgs::msg::MarkerAr
 
     if (ee_parent_link != nullptr && !trajectory.empty())
     {
-      marker_publisher->publish(createTrajectoryMarkerArray(trajectory, ee_parent_link, GREEN(0.5)));
+      marker_publisher->publish(createTrajectoryMarkerArray(trajectory, ee_parent_link, YELLOW(1.0)));
     }
   };
 
